@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from clientes.serializers import ClienteSerializer
 from colaboradores.serializers import ColaboradorSerializer
+from farmacias.models import Farmacia
 from observaciones.serializers import ObservacionSerializer
 
 from protocolos.models import Protocolo
@@ -13,8 +14,16 @@ from servicios.serializers import ServicioSerializer
 class GetProtocoloByObservacionWord(APIView):
 
     def post(self, request, *args, **kwargs):
+
+        farmacia = Farmacia.objects.filter(user=request.user)
+        if not farmacia.exists():
+            return Response({}, status=status.HTTP_404_NOT_FOUND)
+        
+        farmacia = farmacia.first()
+
+        
         word = request.data.get("word")
-        protocolos = Protocolo.objects.filter(observaciones__detalle__contains=word).distinct()
+        protocolos = Protocolo.objects.filter(farmacia=farmacia, observaciones__detalle__contains=word).distinct()
         data = []
 
         for protocolo in protocolos:

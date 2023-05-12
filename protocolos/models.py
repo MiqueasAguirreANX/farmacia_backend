@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from farmacias.models import Farmacia
 
 
 class Protocolo(models.Model):
@@ -26,6 +27,7 @@ class Protocolo(models.Model):
     estado = models.CharField(max_length=40, choices=ESTADO_CHOICES)
     fecha_vencimento = models.DateField(default=timezone.now().date())
     entregado_proveedor = models.BooleanField(default=False)
+    farmacia = models.ForeignKey(Farmacia, on_delete=models.CASCADE)
 
     def get_fecha(self):
         return self.fecha.strftime("%H:%M %d/%m/%Y")

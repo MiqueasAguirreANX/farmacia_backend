@@ -25,7 +25,7 @@ class Protocolo(models.Model):
     delivery = models.BooleanField(default=False)
     colaborador = models.ForeignKey("colaboradores.Colaborador", blank=True, null=True, on_delete=models.CASCADE)
     estado = models.CharField(max_length=40, choices=ESTADO_CHOICES)
-    fecha_vencimento = models.DateField(default=timezone.now().date())
+    fecha_vencimento = models.DateField(default=timezone.now().date(), blank=True, null=True)
     entregado_proveedor = models.BooleanField(default=False)
     farmacia = models.ForeignKey(Farmacia, on_delete=models.CASCADE)
 

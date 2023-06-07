@@ -31,3 +31,6 @@ class Protocolo(models.Model):
 
     def get_fecha(self):
         return self.fecha.strftime("%H:%M %d/%m/%Y")
+    
+    class Meta:
+        ordering = ["-fecha"]

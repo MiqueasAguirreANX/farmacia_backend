@@ -16,7 +16,14 @@ class ProtocoloViewSet(viewsets.ModelViewSet):
             return []
         
         farmacia = farmacia.first()
-        return Protocolo.objects.filter(farmacia=farmacia)
+        cantidad = 500
+        get_cantidad = self.request.GET.get("cantidad", False)
+        if get_cantidad:
+            cantidad = int(get_cantidad)
+            if cantidad == -1:
+                return Protocolo.objects.filter(farmacia=farmacia)        
+            
+        return Protocolo.objects.filter(farmacia=farmacia)[:cantidad]
 
     def create(self, request):
         data = request.data

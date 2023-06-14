@@ -18,14 +18,18 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         self.stdout.write("Loading Json Data")
-        user_farmacia = User.objects.create_user(
+        user_farmacia = User.objects.get(
             username="pablo1234",
-            password="pablo1234",
         )
-        farmacia = Farmacia(nombre="Yuvone", user=user_farmacia)
+        farmacia = Farmacia(id=1, nombre="Yuvone", user=user_farmacia)
         farmacia.save()
 
         data = []
+        Servicio.objects.all().delete()
+        Colaborador.objects.all().delete()
+        Cliente.objects.all().delete()
+        Protocolo.objects.all().delete()
+
         with open(settings.BASE_DIR / "data/servicios.json", "r") as rf:
             data.extend(json.load(rf))
             for elem in data:

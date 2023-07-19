@@ -1,7 +1,7 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
+import pytz
 from colaboradores.models import Colaborador
 from farmacias.models import Farmacia
 from observaciones.models import Observacion
@@ -23,11 +23,10 @@ class ObservacionesOfProtocolo(APIView):
             return Response({}, status=status.HTTP_404_NOT_FOUND)
         
         farmacia = farmacia.first()
-        
         protocolo = self.get_object(pk, farmacia)
         observaciones = [{
             "colaborador": x.colaborador.nombre,
-            "fecha": x.get_fecha(),
+            "fecha": x.fecha.astimezone(pytz.timezone("America/Argentina/Buenos_Aires")).strftime("%H:%M %d/%m/%Y"),
             "detalle": x.detalle,
         } for x in protocolo.observaciones.all()]
 

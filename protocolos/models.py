@@ -12,7 +12,7 @@ class Protocolo(models.Model):
         ("Presupuesto", "Presupuesto"),
     )
 
-    fecha = models.DateTimeField(default=timezone.now())
+    fecha = models.DateTimeField(auto_now_add=True, editable=True)
     cliente = models.ForeignKey("clientes.Cliente", blank=True, null=True, on_delete=models.CASCADE)
     servicio = models.ForeignKey("servicios.Servicio", blank=True, null=True, on_delete=models.CASCADE)
     observaciones = models.ManyToManyField("observaciones.Observacion")

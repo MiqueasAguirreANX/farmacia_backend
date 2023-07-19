@@ -26,9 +26,6 @@ class Command(BaseCommand):
 
         data = []
         Servicio.objects.all().delete()
-        Colaborador.objects.all().delete()
-        Cliente.objects.all().delete()
-        Protocolo.objects.all().delete()
 
         with open(settings.BASE_DIR / "data/servicios.json", "r") as rf:
             data.extend(json.load(rf))
@@ -38,6 +35,7 @@ class Command(BaseCommand):
                 instance = Servicio(**row)
                 instance.save()
 
+        Colaborador.objects.all().delete()
         data = []
         with open(settings.BASE_DIR / "data/colaboradores.json", "r") as rf:
             data.extend(json.load(rf))
@@ -47,6 +45,7 @@ class Command(BaseCommand):
                 instance = Colaborador(**row)
                 instance.save()
 
+        Cliente.objects.all().delete()
         data = []
         with open(settings.BASE_DIR / "data/clientes.json", "r") as rf:
             data.extend(json.load(rf))
@@ -64,6 +63,7 @@ class Command(BaseCommand):
                 instance = Cliente(**row)
                 instance.save()
 
+        Protocolo.objects.all().delete()
         data = []
         with open(settings.BASE_DIR / "data/protocolos.json", "r") as rf:
             data.extend(json.load(rf))

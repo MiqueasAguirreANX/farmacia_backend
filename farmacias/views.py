@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 
 from farmacias.models import Farmacia
 from farmacias.serializers import FarmaciaSerializer
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -27,6 +27,7 @@ class CurrentFarmacia(APIView):
 
 
 class CustomAuthToken(ObtainAuthToken):
+    permission_classes = [AllowAny,]
 
     def post(self, request, *args, **kwargs):
         serializer = self.serializer_class(data=request.data,

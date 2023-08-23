@@ -16,12 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import render
 from django.urls import path, include
-from rest_framework_simplejwt.views import (
-    TokenObtainPairView,
-    TokenRefreshView,
-)
 from django.conf.urls.static import static
 from django.conf import settings
+from django.urls import re_path
+from rest_framework import permissions
+from farmacias.views import CustomAuthToken
 
 def index(request):
     return render(request, 'index.html', {})
@@ -36,7 +35,6 @@ urlpatterns = [
     path("api/protocolos/", include("protocolos.urls")),
     path("api/servicios/", include("servicios.urls")),
     path("api/farmacias/", include("farmacias.urls")),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path("api/auth/", CustomAuthToken.as_view(), name="auth"),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

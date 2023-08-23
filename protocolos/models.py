@@ -28,6 +28,7 @@ class Protocolo(models.Model):
     fecha_vencimento = models.DateField(blank=True, null=True)
     entregado_proveedor = models.BooleanField(default=False, blank=True, null=True)
     farmacia = models.ForeignKey(Farmacia, on_delete=models.CASCADE)
+    fecha_cierre = models.DateTimeField(blank=True, null=True)
 
     def get_fecha(self):
         return self.fecha.strftime("%H:%M %d/%m/%Y")

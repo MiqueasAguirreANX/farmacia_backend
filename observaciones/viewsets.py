@@ -1,14 +1,16 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 from farmacias.models import Farmacia
 
 from observaciones.models import Observacion
 from observaciones.serializers import ObservacionSerializer
-
+from rest_framework.authentication import TokenAuthentication
 
 class ObservacionViewSet(viewsets.ModelViewSet):
     serializer_class = ObservacionSerializer
+    permission_classes = [IsAuthenticated,]
+    authentication_classes = [TokenAuthentication,]
 
     def get_queryset(self):
         farmacia = Farmacia.objects.filter(user=self.request.user)

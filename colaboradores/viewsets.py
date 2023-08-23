@@ -1,12 +1,14 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-
+from rest_framework.permissions import IsAuthenticated
 from colaboradores.models import Colaborador
 from colaboradores.serializers import ColaboradorSerializer
 from farmacias.models import Farmacia
-
+from rest_framework.authentication import TokenAuthentication
 
 class ColaboradorViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated,]
+    authentication_classes = [TokenAuthentication,]
     serializer_class = ColaboradorSerializer
 
     def get_queryset(self):

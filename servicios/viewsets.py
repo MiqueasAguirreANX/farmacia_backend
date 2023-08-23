@@ -5,9 +5,12 @@ from farmacias.models import Farmacia
 
 from servicios.models import Servicio
 from servicios.serializers import ServicioSerializer
-
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 class ServicioViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated,]
+    authentication_classes = [TokenAuthentication,]
     serializer_class = ServicioSerializer
 
     def get_queryset(self):

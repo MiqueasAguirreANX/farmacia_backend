@@ -14,3 +14,6 @@ class Cliente(models.Model):
     entre_calles = models.CharField(max_length=250, blank=True, null=True)
     codigo_postal = models.CharField(max_length=10, blank=True, null=True)
     farmacia = models.ForeignKey(Farmacia, on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return f"{self.nombre} {self.apellido}"

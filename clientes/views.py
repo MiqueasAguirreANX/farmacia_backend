@@ -70,7 +70,7 @@ class GetProtocolosDeCliente(APIView):
         farmacia = farmacia.first()
 
         clienteI = get_object_or_404(Cliente, pk=cliente)
-        protocolos = Protocolo.objects.filter(cliente=clienteI)
+        protocolos = Protocolo.objects.select_related("cliente", "servicio", "colaborador").prefetch_related("observaciones").filter(cliente=clienteI)
         return Response(
             data=ShowProtocoloSerializer(protocolos, many=True).data, 
             status=200

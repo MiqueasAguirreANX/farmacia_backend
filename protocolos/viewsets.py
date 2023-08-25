@@ -23,7 +23,7 @@ class ProtocoloViewSet(viewsets.ModelViewSet):
         except TypeError:
             cantidad = 500
             
-        protocolos = Protocolo.objects.filter(farmacia=farmacia)
+        protocolos = Protocolo.objects.select_related("cliente", "servicio", "colaborador").prefetch_related("observaciones").filter(farmacia=farmacia)
         if cantidad == -1:
             return protocolos
         

@@ -5,7 +5,7 @@ from clientes.models import Cliente
 
 class ClienteSerializer(serializers.ModelSerializer):
     dni = serializers.IntegerField(
-        min_value=1000000
+        min_value=0
     )
 
     class Meta:

@@ -19,7 +19,7 @@ class ServicioViewSet(viewsets.ModelViewSet):
             return []
         
         farmacia = farmacia.first()
-        return Servicio.objects.filter(farmacia=farmacia)
+        return Servicio.objects.select_related("farmacia").filter(farmacia=farmacia)
 
     def create(self, request):
         data = request.data

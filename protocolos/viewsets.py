@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, DjangoModelPermissions
+from rest_framework.permissions import IsAuthenticated, IsAdminUser, DjangoModelPermissions
 from farmacias.models import Farmacia
 from rest_framework.authentication import TokenAuthentication
 from protocolos.models import Protocolo
@@ -9,8 +9,15 @@ from django.shortcuts import get_object_or_404
 
 class ProtocoloViewSet(viewsets.ModelViewSet):
     serializer_class = ShowProtocoloSerializer
-    permission_classes = [IsAuthenticated,]
     authentication_classes = [TokenAuthentication,]
+
+    def get_permissions(self):
+        if self.action == "destroy":
+            permission_classes = [IsAdminUser,]
+        else:
+            permission_classes = [IsAuthenticated,]
+        return [permission() for permission in permission_classes]
+
 
     def get_queryset(self):
         farmacia = Farmacia.objects.filter(user=self.request.user.pk)

@@ -12,7 +12,7 @@ class Colaborador(models.Model):
         ("COLABORADOR", "COLABORADOR"),
         ("LECTURA", "LECTURA"),
     ), default="LECTURA")
-    codigo = models.PositiveSmallIntegerField(default=0)
+    codigo = models.CharField(max_length=3)
 
     def get_colaborador_observaciones(self):
         """Retorna las observaciones del colaborador"""

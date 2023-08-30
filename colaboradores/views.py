@@ -12,7 +12,7 @@ class CheckEmpleadoCodigo(APIView):
     permission_classes = [IsAuthenticated,]
     authentication_classes = [TokenAuthentication,]
 
-    def get(self, request, codigo: int):
+    def get(self, request, codigo: str):
         farmacia = Farmacia.objects.filter(user=request.user)
         if not farmacia.exists():
             return Response({}, status=status.HTTP_404_NOT_FOUND)

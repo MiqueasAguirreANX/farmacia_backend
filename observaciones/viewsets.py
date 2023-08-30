@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from farmacias.models import Farmacia
 
 from observaciones.models import Observacion
@@ -9,8 +9,14 @@ from rest_framework.authentication import TokenAuthentication
 
 class ObservacionViewSet(viewsets.ModelViewSet):
     serializer_class = ObservacionSerializer
-    permission_classes = [IsAuthenticated,]
     authentication_classes = [TokenAuthentication,]
+
+    def get_permissions(self):
+        if self.action == "destroy":
+            permission_classes = [IsAdminUser,]
+        else:
+            permission_classes = [IsAuthenticated,]
+        return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         farmacia = Farmacia.objects.filter(user=self.request.user)

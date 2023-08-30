@@ -1,15 +1,21 @@
 from rest_framework import viewsets
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from colaboradores.models import Colaborador
 from colaboradores.serializers import ColaboradorSerializer
 from farmacias.models import Farmacia
 from rest_framework.authentication import TokenAuthentication
 
 class ColaboradorViewSet(viewsets.ModelViewSet):
-    permission_classes = [IsAuthenticated,]
     authentication_classes = [TokenAuthentication,]
     serializer_class = ColaboradorSerializer
+
+    def get_permissions(self):
+        if self.action == "destroy":
+            permission_classes = [IsAdminUser,]
+        else:
+            permission_classes = [IsAuthenticated,]
+        return [permission() for permission in permission_classes]
 
     def get_queryset(self):
         farmacia = Farmacia.objects.filter(user=self.request.user)

@@ -7,6 +7,7 @@ class Observacion(models.Model):
     detalle = models.TextField(blank=True, null=True)
     fecha = models.DateTimeField(auto_now_add=True)
     farmacia = models.ForeignKey(Farmacia, on_delete=models.CASCADE)
+    tachado = models.BooleanField(default=False)
 
     def get_fecha(self):
         return self.fecha.strftime("%H:%M %d/%m/%Y")

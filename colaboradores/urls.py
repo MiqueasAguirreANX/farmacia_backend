@@ -8,5 +8,5 @@ router.register(r"colaboradores", viewsets.ColaboradorViewSet, basename="colabor
 
 urlpatterns = [
     path('', include(router.urls)),
-    path("check-empleado/<int:codigo>", CheckEmpleadoCodigo.as_view(), name="check-empleado"),
+    path("check-empleado/<str:codigo>", CheckEmpleadoCodigo.as_view(), name="check-empleado"),
 ]
